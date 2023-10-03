@@ -13,7 +13,7 @@ import cv2
 import colorcet as cc
 from PIL import ImageColor
 from tqdm import tqdm
-
+import pdb
 
 def create_labeled_video(
     data_dir,
@@ -183,6 +183,8 @@ def create_labeled_video(
 
         if dlc_online:
             poses_before_index = np.where(pose_times < cur_time)[0]
+            if poses_before_index.size == 0:
+                continue
             if poses_before_index.size > 0:
                 cur_pose_time = pose_times[poses_before_index[-1]]
                 this_pose = poses[poses["pose_time"] == cur_pose_time]
