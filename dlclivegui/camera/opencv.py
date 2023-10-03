@@ -129,7 +129,7 @@ class OpenCVCam(Camera):
 
         # if video, wait...
         if self.video:
-            while time.time() - self.last_cap_read < (1.0 / self.fps):
+            while time.perf_counter() - self.last_cap_read < (1.0 / self.fps):
                 pass
 
         ret, frame = self.cap.read()
@@ -144,7 +144,7 @@ class OpenCVCam(Camera):
                 if self.cv2_color == 1:
                     frame = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)
 
-            self.last_cap_read = time.time()
+            self.last_cap_read = time.perf_counter()
 
             return frame, self.last_cap_read
         else:

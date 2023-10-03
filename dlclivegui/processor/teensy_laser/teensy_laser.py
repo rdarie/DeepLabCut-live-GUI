@@ -35,7 +35,7 @@ class TeensyLaser(Processor):
                 )
             )
             self.stim_on = True
-            self.stim_on_time.append(time.time())
+            self.stim_on_time.append(time.perf_counter())
 
     def stim_off(self):
 
@@ -43,7 +43,7 @@ class TeensyLaser(Processor):
         if self.stim_on:
             self.ser.write(b"X")
             self.stim_on = False
-            self.stim_off_time.append(time.time())
+            self.stim_off_time.append(time.perf_counter())
 
     def process(self, pose):
 

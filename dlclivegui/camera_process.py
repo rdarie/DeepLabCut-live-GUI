@@ -72,8 +72,8 @@ class CameraProcess(object):
         )
         self.capture_process.start()
 
-        stime = time.time()
-        while time.time() - stime < timeout:
+        stime = time.perf_counter()
+        while time.perf_counter() - stime < timeout:
             cmd = self.q_from_process.read()
             if cmd is not None:
                 if (cmd[0] == "capture") and (cmd[1] == "start"):
@@ -107,15 +107,15 @@ class CameraProcess(object):
 
         run = True
         write = False
-        last_frame_time = time.time()
+        last_frame_time = time.perf_counter()
 
         while run:
 
-            start_capture = time.time()
+            start_capture = time.perf_counter()
 
             frame, frame_time = self.device.get_image_on_time()
 
-            write_capture = time.time()
+            write_capture = time.perf_counter()
 
             np.copyto(self.frame, frame)
             self.frame_time[0] = frame_time
@@ -123,13 +123,13 @@ class CameraProcess(object):
             if write:
                 ret = self.write_frame_queue.write((frame, frame_time))
 
-            end_capture = time.time()
+            end_capture = time.perf_counter()
 
             # print("read frame = %0.6f // write to queues = %0.6f" % (write_capture-start_capture, end_capture-write_capture))
-            # print("capture rate = %d" % (int(1 / (time.time()-last_frame_time))))
+            # print("capture rate = %d" % (int(1 / (time.perf_counter()-last_frame_time))))
             # print("\n")
 
-            last_frame_time = time.time()
+            last_frame_time = time.perf_counter()
 
             ### read commands
             cmd = self.q_to_process.read()
@@ -178,8 +178,8 @@ class CameraProcess(object):
         )
         self.writer_process.start()
 
-        stime = time.time()
-        while time.time() - stime < timeout:
+        stime = time.perf_counter()
+        while time.perf_counter() - stime < timeout:
             cmd = self.q_from_process.read()
             if cmd is not None:
                 if (cmd[0] == "writer") and (cmd[1] == "start"):
@@ -290,8 +290,8 @@ class CameraProcess(object):
             if self.capture_process.is_alive() and self.writer_process.is_alive():
                 self.q_to_process.write(("capture", "write", True))
 
-                stime = time.time()
-                while time.time() - stime < timeout:
+                stime = time.perf_counter()
+                while time.perf_counter() - stime < timeout:
                     cmd = self.q_from_process.read()
                     if cmd is not None:
                         if (cmd[0] == "capture") and (cmd[1] == "write"):
@@ -310,8 +310,8 @@ class CameraProcess(object):
             if (self.capture_process.is_alive()) and (self.writer_process.is_alive()):
                 self.q_to_process.write(("capture", "write", False))
 
-                stime = time.time()
-                while time.time() - stime < timeout:
+                stime = time.perf_counter()
+                while time.perf_counter() - stime < timeout:
                     cmd = self.q_from_process.read()
                     if cmd is not None:
                         if (cmd[0] == "capture") and (cmd[1] == "write"):

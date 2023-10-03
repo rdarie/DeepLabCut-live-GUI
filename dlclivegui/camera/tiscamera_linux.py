@@ -197,7 +197,7 @@ class TISCam(Camera):
             pass
         self.new_sample = False
 
-        return self.frame, time.time()
+        return self.frame, time.perf_counter()
 
     def close_capture_device(self):
 

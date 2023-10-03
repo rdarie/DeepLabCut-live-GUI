@@ -105,7 +105,7 @@ class TISCam(Camera):
         self.set_rotation()
         # self.set_crop()
         self.set_fps()
-        self.next_frame = time.time()
+        self.next_frame = time.perf_counter()
 
         self.cam.open(self.id)
         self.cam.SetContinuousMode(0)

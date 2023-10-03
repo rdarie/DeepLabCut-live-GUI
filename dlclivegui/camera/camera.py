@@ -116,13 +116,16 @@ class Camera(object):
 
         frame = None
         while frame is None:
-            cur_time = time.time()
+            cur_time = time.perf_counter()
             if cur_time > self.next_frame:
                 frame = self.get_image()
                 timestamp = cur_time
-                self.next_frame = max(
-                    self.next_frame + 1.0 / self.fps, cur_time + 0.5 / self.fps
-                )
+                self.next_frame = self.next_frame + 1.0 / self.fps
+                while self.next_frame < cur_time:
+                    self.next_frame = self.next_frame + 1.0 / self.fps
+                # self.next_frame = max(
+                #     self.next_frame + 1.0 / self.fps, cur_time + 0.5 / self.fps
+                # )
 
         return frame, timestamp
 

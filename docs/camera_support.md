@@ -62,7 +62,7 @@ If you're camera has built in methods to ensure the correct frame rate (e.g. whe
 
 The `get_image` method has no input arguments, but must return an image as a numpy array. We also recommend converting images to 8-bit integers (data type `uint8`).
 
-The `get_image_on_time` method has no input arguments, but must return an image as a numpy array (as in `get_image`) and the timestamp at which the image is returned (using python's `time.time()` function).
+The `get_image_on_time` method has no input arguments, but must return an image as a numpy array (as in `get_image`) and the timestamp at which the image is returned (using python's `time.perf_counter()` function).
 
 ### Camera Specific Tips for Installation & Use:
 

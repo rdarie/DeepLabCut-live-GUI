@@ -53,8 +53,8 @@ class CameraPoseProcess(CameraProcess):
         )
         self.pose_process.start()
 
-        stime = time.time()
-        while time.time() - stime < timeout:
+        stime = time.perf_counter()
+        while time.perf_counter() - stime < timeout:
             cmd = self.q_from_process.read()
             if cmd is not None:
                 if (cmd[0] == "pose") and (cmd[1] == "start"):
@@ -110,7 +110,7 @@ class CameraPoseProcess(CameraProcess):
         write = False
         frame_time = 0
         pose_time = 0
-        end_time = time.time()
+        end_time = time.perf_counter()
 
         while run:
 
@@ -121,7 +121,7 @@ class CameraPoseProcess(CameraProcess):
                 frame = self.frame
                 frame_time = self.frame_time[0]
                 pose = self.dlc.get_pose(frame, frame_time=frame_time, record=write)
-                pose_time = time.time()
+                pose_time = time.perf_counter()
 
                 self.display_pose_queue.write(pose, clear=True)
 
@@ -152,8 +152,8 @@ class CameraPoseProcess(CameraProcess):
             if (self.pose_process.is_alive()) and (self.writer_process.is_alive()):
                 self.q_to_process.write(("pose", "write", True))
 
-                stime = time.time()
-                while time.time() - stime < timeout:
+                stime = time.perf_counter()
+                while time.perf_counter() - stime < timeout:
                     cmd = self.q_from_process.read()
                     if cmd is not None:
                         if (cmd[0] == "pose") and (cmd[1] == "write"):
@@ -172,8 +172,8 @@ class CameraPoseProcess(CameraProcess):
             if (self.pose_process.is_alive()) and (self.writer_process.is_alive()):
                 self.q_to_process.write(("pose", "write", False))
 
-                stime = time.time()
-                while time.time() - stime < timeout:
+                stime = time.perf_counter()
+                while time.perf_counter() - stime < timeout:
                     cmd = self.q_from_process.read()
                     if cmd is not None:
                         if (cmd[0] == "pose") and (cmd[1] == "write"):
@@ -213,8 +213,8 @@ class CameraPoseProcess(CameraProcess):
             if self.pose_process.is_alive():
                 self.q_to_process.write(("pose", "save", filename))
 
-                stime = time.time()
-                while time.time() - stime < timeout:
+                stime = time.perf_counter()
+                while time.perf_counter() - stime < timeout:
                     cmd = self.q_from_process.read()
                     if cmd is not None:
                         if (cmd[0] == "pose") and (cmd[1] == "save"):

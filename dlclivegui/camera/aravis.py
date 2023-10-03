@@ -97,7 +97,7 @@ class AravisCam(Camera):
         frame = self._convert_image_to_numpy(buffer)
         self.stream.push_buffer(buffer)
 
-        return frame, time.time()
+        return frame, time.perf_counter()
 
     def _convert_image_to_numpy(self, buffer):
         """ from https://github.com/SintefManufacturing/python-aravis """
