@@ -113,6 +113,8 @@ class OpenCVCam(Camera):
             if self.fps:
                 self.cap.set(cv2.CAP_PROP_FPS, self.fps)
 
+            self.cv2_color = 0.
+
         else:
 
             self.cap = cv2.VideoCapture(self.id)
@@ -121,7 +123,7 @@ class OpenCVCam(Camera):
             # self.fps = self.cap.get(cv2.CAP_PROP_FPS)
             self.last_cap_read = 0
 
-        self.cv2_color = self.cap.get(cv2.CAP_PROP_MODE)
+            self.cv2_color = self.cap.get(cv2.CAP_PROP_MODE)
 
         return True
 
