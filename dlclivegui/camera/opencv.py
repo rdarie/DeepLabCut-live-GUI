@@ -97,10 +97,9 @@ class OpenCVCam(Camera):
             self.cap = (
                 cv2.VideoCapture(self.id, cv2.CAP_V4L)
                 if platform.system() == "Linux"
-                else cv2.VideoCapture(self.id)
+                else cv2.VideoCapture(self.id, cv2.CAP_DSHOW)
             )
             ret, frame = self.cap.read()
-
             if self.im_size:
                 self.cap.set(cv2.CAP_PROP_FRAME_WIDTH, self.im_size[0])
                 self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, self.im_size[1])
@@ -113,8 +112,6 @@ class OpenCVCam(Camera):
             if self.fps:
                 self.cap.set(cv2.CAP_PROP_FPS, self.fps)
 
-            self.cv2_color = 0.
-
         else:
 
             self.cap = cv2.VideoCapture(self.id)
@@ -123,7 +120,7 @@ class OpenCVCam(Camera):
             # self.fps = self.cap.get(cv2.CAP_PROP_FPS)
             self.last_cap_read = 0
 
-            self.cv2_color = self.cap.get(cv2.CAP_PROP_MODE)
+        self.cv2_color = self.cap.get(cv2.CAP_PROP_MODE)
 
         return True
 
