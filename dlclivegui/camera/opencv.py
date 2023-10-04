@@ -100,9 +100,9 @@ class OpenCVCam(Camera):
                 else cv2.VideoCapture(self.id, cv2.CAP_DSHOW)
             )
             ret, frame = self.cap.read()
-            if self.im_size:
-                self.cap.set(cv2.CAP_PROP_FRAME_WIDTH, self.im_size[0])
-                self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, self.im_size[1])
+            if self.resolution:
+                self.cap.set(cv2.CAP_PROP_FRAME_WIDTH, self.resolution[0])
+                self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, self.resolution[1])
             if self.auto_exposure:
                 self.cap.set(cv2.CAP_PROP_AUTO_EXPOSURE, self.auto_exposure)
             if self.exposure:

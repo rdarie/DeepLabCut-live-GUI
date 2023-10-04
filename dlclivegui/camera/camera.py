@@ -68,6 +68,7 @@ class Camera(object):
         self.gain = gain
         self.rotate = rotate
         self.crop = [int(c) for c in crop] if crop else None
+        self.resolution = resolution
         self.set_im_size(resolution)
         self.fps = fps
         self.use_tk_display = use_tk_display
@@ -94,7 +95,7 @@ class Camera(object):
         self.im_size = (
             (int(res[0]), int(res[1]))
             if self.crop is None
-            else (self.crop[3] - self.crop[2], self.crop[1] - self.crop[0])
+            else (self.crop[1] - self.crop[0], self.crop[3] - self.crop[2])
         )
 
     def set_capture_device(self):
