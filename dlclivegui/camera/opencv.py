@@ -97,6 +97,7 @@ class OpenCVCam(Camera):
             self.cap = (
                 cv2.VideoCapture(self.id, cv2.CAP_V4L)
                 if platform.system() == "Linux"
+                # else cv2.VideoCapture(self.id)
                 else cv2.VideoCapture(self.id, cv2.CAP_DSHOW)
             )
             ret, frame = self.cap.read()
